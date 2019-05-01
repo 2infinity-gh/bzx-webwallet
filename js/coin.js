@@ -10,21 +10,21 @@
 	var coinjs = window.coinjs = function () { };
 
 	/* public vars */
-	coinjs.pub = 0x00;
-	coinjs.priv = 0x80;
-	coinjs.multisig = 0x05;
+	coinjs.pub = 0x4b;
+	coinjs.priv = 0xd2;
+	coinjs.multisig = 0x15;
+	coinjs.wif = 0xd2;
 	coinjs.hdkey = {'prv':0x0488ade4, 'pub':0x0488b21e};
-	coinjs.bech32 = {'charset':'qpzry9x8gf2tvdw0s3jn54khce6mua7l', 'version':0, 'hrp':'bc'};
+	//coinjs.bech32 = {'charset':'qpzry9x8gf2tvdw0s3jn54khce6mua7l', 'version':0, 'hrp':'bc'};
 
 	coinjs.compressed = false;
 
 	/* other vars */
-	coinjs.developer = '3K1oFZMks41C7qDYBsr72SYjapLqDuSYuN'; //bitcoin
+	coinjs.developer = 'XBRBB39Zj3ht7aiQiyWiwCGiK5Sz1gbeH6'; //bitcoinzero
 
 	/* bit(coinb.in) api vars */
-	coinjs.host = ('https:'==document.location.protocol?'https://':'http://')+'coinb.in/api/';
-	coinjs.uid = '1';
-	coinjs.key = '12345678901234567890123456789012';
+	coinjs.host =  'bitcoinzerox.net';
+	coinjs.bzxapi = 'https://explorer.bitcoinzerox.net/api';
 
 	/* start of address functions */
 
@@ -314,9 +314,9 @@
 		}
 	}
 
-	/* retreive the balance from a given address */
+/* retreive the balance from a given address */
 	coinjs.addressBalance = function(address, callback){
-		coinjs.ajax(coinjs.host+'?uid='+coinjs.uid+'&key='+coinjs.key+'&setmodule=addresses&request=bal&address='+address+'&r='+Math.random(), callback, "GET");
+		coinjs.ajax(coinjs.bzxapi+'/ext/?command=bal&address='+address, callback, "GET");
 	}
 
 	/* decompress an compressed public key */
@@ -1030,7 +1030,7 @@
 
 		/* list unspent transactions */
 		r.listUnspent = function(address, callback) {
-			coinjs.ajax(coinjs.host+'?uid='+coinjs.uid+'&key='+coinjs.key+'&setmodule=addresses&request=unspent&address='+address+'&r='+Math.random(), callback, "GET");
+			coinjs.ajax(coinjs.bzxapi+'/ext/?command=unspent&wallet='+address, callback, "GET");
 		}
 
 		/* add unspent to transaction */
@@ -1096,7 +1096,8 @@
 		/* broadcast a transaction */
 		r.broadcast = function(callback, txhex){
 			var tx = txhex || this.serialize();
-			coinjs.ajax(coinjs.host+'?uid='+coinjs.uid+'&key='+coinjs.key+'&setmodule=bitcoin&request=sendrawtransaction&rawtx='+tx+'&r='+Math.random(), callback, "GET");
+			coinjs.ajax(coinjs.bzxapi+'/ext/?command=broadcast&tx='+tx, callback, "GET");
+				
 		}
 
 		/* generate the transaction hash to sign from a transaction input */
