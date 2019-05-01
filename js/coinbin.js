@@ -1646,7 +1646,9 @@ $(document).ready(function() {
 		$("#rawSubmitBtn").unbind("");
 			$("#rawSubmitBtn").click(function(){
 				rawSubmitDefault(this); // revert to default
+		});
 	}
+	
 
 	function configureGetUnspentTx(){
 		$("#redeemFromBtn").attr('rel',$("#coinjs_utxo option:selected").val());
