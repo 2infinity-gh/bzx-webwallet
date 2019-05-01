@@ -316,7 +316,7 @@
 
 /* retreive the balance from a given address */
 	coinjs.addressBalance = function(address, callback){
-		coinjs.ajax(coinjs.bzxapi+'/ext/?command=bal&address='+address, callback, "GET");
+		coinjs.ajax(coinjs.bzxapi+'/ext/?command=bal&wallet='+address, callback, "GET");
 	}
 
 	/* decompress an compressed public key */
