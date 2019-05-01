@@ -93,7 +93,7 @@ $(document).ready(function() {
 
 		$("#walletQrCode").html("");
 		var qrcode = new QRCode("walletQrCode");
-		qrcode.makeCode("bitcoin:");
+		qrcode.makeCode("bzx:");
 
 		$("#walletKeys .privkey").val("");
 		$("#walletKeys .pubkey").val("");
@@ -111,7 +111,7 @@ $(document).ready(function() {
 
 	$("#walletToSegWit").click(function(){
 		$("#walletToBtn").html('SegWit <span class="caret"></span>');
-		$("#walletSegwit")[0].checked = true;
+		$("#walletSegwit")[0].checked = false;
 		$("#walletSegwitp2sh")[0].checked = true;
 		$("#openBtn").click();
 	});
