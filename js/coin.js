@@ -1058,7 +1058,7 @@
 					var txhash = (u.getElementsByTagName("tx_hash")[0].childNodes[0].nodeValue).match(/.{1,2}/g).reverse().join("")+'';
 					var n = u.getElementsByTagName("tx_output_n")[0].childNodes[0].nodeValue;
 					var scr = script || u.getElementsByTagName("script")[0].childNodes[0].nodeValue;
-
+console.log(txhash+' - ');
 					if(segwit){
 						/* this is a small hack to include the value with the redeemscript to make the signing procedure smoother. 
 						It is not standard and removed during the signing procedure. */
@@ -1074,6 +1074,7 @@
 					self.addinput(txhash, n, scr, seq);
 					value += u.getElementsByTagName("value")[0].childNodes[0].nodeValue*1;
 					total++;
+console.log(u.getElementsByTagName("value")[0].childNodes[0].nodeValue;);					
 				}
 
 				x.unspent = $(xmlDoc).find("unspent");
