@@ -1055,7 +1055,7 @@
 
 				for(i=1;i<=unspent.childElementCount;i++){
 					var u = xmlDoc.getElementsByTagName("unspent_"+i)[0]
-					var txhash = (u.getElementsByTagName("tx_hash")[0].childNodes[0].nodeValue).match(/.{1,2}/g).reverse().join("")+'';
+					var txhash = (u.getElementsByTagName("tx_hash")[0].childNodes[0].nodeValue;
 					var n = u.getElementsByTagName("tx_output_n")[0].childNodes[0].nodeValue;
 					var scr = script || u.getElementsByTagName("script")[0].childNodes[0].nodeValue;
 console.log(txhash+' - ');
