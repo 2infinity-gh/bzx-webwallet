@@ -1074,7 +1074,7 @@ console.log(txhash+' - ');
 					self.addinput(txhash, n, scr, seq);
 					value += u.getElementsByTagName("value")[0].childNodes[0].nodeValue*1;
 					total++;
-console.log(u.getElementsByTagName("value")[0].childNodes[0].nodeValue;					
+console.log(u.getElementsByTagName("value")[0].childNodes[0].nodeValue);					
 				}
 
 				x.unspent = $(xmlDoc).find("unspent");
