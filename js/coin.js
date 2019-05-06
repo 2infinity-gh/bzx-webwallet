@@ -24,7 +24,9 @@
 
 	/* bit(coinb.in) api vars */
 	coinjs.host =  'bitcoinzerox.net';
-	coinjs.bzxapi = 'https://explorer.bitcoinzerox.net/api';
+	coinjs.bzxapi = 'https://bzx.apixx.ovh/api';
+	coinjs.uid = '1';
+	coinjs.key = '12345678901234567890123456789012';
 
 	/* start of address functions */
 
@@ -314,9 +316,9 @@
 		}
 	}
 
-/* retreive the balance from a given address */
+	/* retreive the balance from a given address */
 	coinjs.addressBalance = function(address, callback){
-		coinjs.ajax(coinjs.bzxapi+'/ext/?command=bal&wallet='+address, callback, "GET");
+		coinjs.ajax(coinjs.bzxapi+'/ext/?coin=bzx&command=bal&address='+address, callback, "GET");
 	}
 
 	/* decompress an compressed public key */
@@ -846,9 +848,6 @@
 					var multi = coinjs.pubkeys2MultisigAddress(pubkeys, r.signaturesRequired);
 					r.address = multi['address'];
 					r.type = 'multisig__'; // using __ for now to differentiat from the other object .type == "multisig"
-					var rs = Crypto.util.bytesToHex(s.buffer);
-					r.redeemscript = rs;
-
 				} else if((s.chunks.length==2) && (s.buffer[0] == 0 && s.buffer[1] == 20)){ // SEGWIT
 					r = {};
 					r.type = "segwit__";
@@ -862,8 +861,6 @@
 					r.pubkey = Crypto.util.bytesToHex(s.chunks[3]);
 					r.checklocktimeverify = coinjs.bytesToNum(s.chunks[0].slice());
 					r.address = coinjs.simpleHodlAddress(r.pubkey, r.checklocktimeverify).address;
-					var rs = Crypto.util.bytesToHex(s.buffer);
-					r.redeemscript = rs;
 					r.type = "hodl__";
 				}
 			} catch(e) {
@@ -1030,7 +1027,7 @@
 
 		/* list unspent transactions */
 		r.listUnspent = function(address, callback) {
-			coinjs.ajax(coinjs.bzxapi+'/ext/?command=unspent&wallet='+address, callback, "GET");
+			coinjs.ajax(coinjs.bzxapi+'/ext/?coin=bzx&command=unspent&wallet='+address, callback, "GET");
 		}
 
 		/* add unspent to transaction */
@@ -1056,9 +1053,10 @@
 				for(i=1;i<=unspent.childElementCount;i++){
 					var u = xmlDoc.getElementsByTagName("unspent_"+i)[0]
 					var txhash = u.getElementsByTagName("tx_hash")[0].childNodes[0].nodeValue;
+					
 					var n = u.getElementsByTagName("tx_output_n")[0].childNodes[0].nodeValue;
 					var scr = script || u.getElementsByTagName("script")[0].childNodes[0].nodeValue;
-console.log(txhash+' - ');
+
 					if(segwit){
 						/* this is a small hack to include the value with the redeemscript to make the signing procedure smoother. 
 						It is not standard and removed during the signing procedure. */
@@ -1074,7 +1072,6 @@ console.log(txhash+' - ');
 					self.addinput(txhash, n, scr, seq);
 					value += u.getElementsByTagName("value")[0].childNodes[0].nodeValue*1;
 					total++;
-console.log(u.getElementsByTagName("value")[0].childNodes[0].nodeValue);					
 				}
 
 				x.unspent = $(xmlDoc).find("unspent");
@@ -1097,7 +1094,7 @@ console.log(u.getElementsByTagName("value")[0].childNodes[0].nodeValue);
 		/* broadcast a transaction */
 		r.broadcast = function(callback, txhex){
 			var tx = txhex || this.serialize();
-			coinjs.ajax(coinjs.bzxapi+'/ext/?command=broadcast&tx='+tx, callback, "GET");
+			coinjs.ajax(coinjs.bzxapi+'/ext/?coin=bzx&command=broadcast&tx='+tx, callback, "GET");
 				
 		}
 
@@ -1899,6 +1896,8 @@ console.log(u.getElementsByTagName("value")[0].childNodes[0].nodeValue);
 		}
 
 		x.send(a);
+		
+		
 	}
 
 	/* clone an object */
