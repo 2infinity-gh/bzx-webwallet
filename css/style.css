@@ -24,8 +24,12 @@ z-index:-3 }
 
 }
 
-.col-xs-1 {
-    color: #4fc4fc !important;
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: rgba(249, 249, 249, 0.18) !important;
+}
+
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: rgba(0, 0, 0, 0.33) !important;
 }
 
 .alert-warning {
